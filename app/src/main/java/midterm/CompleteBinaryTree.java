@@ -129,6 +129,50 @@ public class CompleteBinaryTree {
         return str;
     }
 
+    public boolean question1() {
+        // implement a public method question1 that returns True if the CompleteBinaryTree satisfies
+        // the max heap property. Otherwise, it should return False.
+        return question1Helper(this.root);
+    }
+
+    private boolean question1Helper(Node curr) {
+        if (curr == null){
+            return true;
+        }
+        else if ((curr.left != null) && (curr.left.data > curr.data)){
+            return false;
+        }
+        else if ((curr.right != null) && (curr.right.data > curr.data)){
+            return false;
+        }
+
+        return ((this.question1Helper(curr.left)) && (this.question1Helper(curr.right)));
+    }
+
+    public CompleteBinaryTree question2() {
+        // implement a public method question 2 that clones (creates an exact duplicate object)
+        // the complete binarytree and returns the root of the cloned tree (also of type complete binarytree)
+        CompleteBinaryTree duplicate = new CompleteBinaryTree();
+        if (this.root == null){
+            return duplicate;
+        }
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(this.root);
+
+        while (!queue.isEmpty()) {
+            Node temp = queue.poll();
+            duplicate.insert(temp.data);
+
+            if (temp.left != null) 
+                queue.add(temp.left);
+
+            if (temp.right != null) 
+                queue.add(temp.right);
+        }
+        return duplicate;
+    }
+
     public static void main(String[] args) {
         CompleteBinaryTree tree = new CompleteBinaryTree();
         tree.insert(1);
