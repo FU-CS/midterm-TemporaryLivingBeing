@@ -13,13 +13,13 @@ class CompleteBinaryTreeTest {
     // This function checks if all values of two binary trees are the same or not.
     public boolean checkTrees(Node root1, Node root2) { 
         //check for nulls
-        if (root1 == null && root2 == null){
+        if ((root1 == null) && (root2 == null)){
             return true;
         } 
-        else if (root1 == null && root2 != null) {
+        else if ((root1 == null) && (root2 != null)) {
             return false;
         }
-        else if (root1 != null && root2 == null) {
+        else if ((root1 != null) && (root2 == null)) {
             return false;
         }
         // create two queues to keep track of nodes in both trees
@@ -155,6 +155,26 @@ class CompleteBinaryTreeTest {
 
     }
     @Test
+    void question2MultipleInsertionForOne() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        tree.insert(60);
+        tree.insert(50);
+        tree.insert(55);
+        tree.insert(48);
+        tree.insert(49);
+        tree.insert(45);
+        tree.insert(50);
+        CompleteBinaryTree duplicate = tree.question2();
+
+        assertEquals(checkTrees(tree.getRoot(), duplicate.getRoot()), true, "Should return true");
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(3);
+        assertEquals(checkTrees(tree.getRoot(), duplicate.getRoot()), false, "Should return false");
+
+    }
+
+    @Test
     void question2AfterInsertionForOne() {
         CompleteBinaryTree tree = new CompleteBinaryTree();
         tree.insert(60);
@@ -173,7 +193,7 @@ class CompleteBinaryTreeTest {
     }
 
     @Test
-    void question2AfterInsertionForBoth() {
+    void question2AfterSameInsertionForBoth() {
         CompleteBinaryTree tree = new CompleteBinaryTree();
         tree.insert(60);
         tree.insert(50);
@@ -185,11 +205,26 @@ class CompleteBinaryTreeTest {
         CompleteBinaryTree duplicate = tree.question2();
 
         assertEquals(checkTrees(tree.getRoot(),  duplicate.getRoot()), true, "Should return true");
-        tree.insert(52);
-        duplicate.insert(52);
+        tree.insert(3);
+        duplicate.insert(3);
         assertEquals(checkTrees(tree.getRoot(),  duplicate.getRoot()), true, "Should return true");
     }
+    void question2AfterDifferentInsertionForBoth() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        tree.insert(60);
+        tree.insert(50);
+        tree.insert(55);
+        tree.insert(48);
+        tree.insert(49);
+        tree.insert(45);
+        tree.insert(50);
+        CompleteBinaryTree duplicate = tree.question2();
 
+        assertEquals(checkTrees(tree.getRoot(),  duplicate.getRoot()), true, "Should return true");
+        tree.insert(3);
+        duplicate.insert(5);
+        assertEquals(checkTrees(tree.getRoot(),  duplicate.getRoot()), false, "Should return false");
+    }
     @Test
     void question2AfterDeletionForOne() {
         CompleteBinaryTree tree = new CompleteBinaryTree();
@@ -208,7 +243,7 @@ class CompleteBinaryTreeTest {
     }
 
     @Test
-    void question2AfterDeletionForBoth() {
+    void question2AfterSameDeletionForBoth() {
         CompleteBinaryTree tree = new CompleteBinaryTree();
         tree.insert(60);
         tree.insert(50);
@@ -225,7 +260,24 @@ class CompleteBinaryTreeTest {
         assertEquals(checkTrees(tree.getRoot(),  duplicate.getRoot()), true, "Should return true");
 
     }
+    @Test
+    void question2AfterDifferentDeletionForBoth() {
+        CompleteBinaryTree tree = new CompleteBinaryTree();
+        tree.insert(60);
+        tree.insert(50);
+        tree.insert(55);
+        tree.insert(48);
+        tree.insert(49);
+        tree.insert(45);
+        tree.insert(50);
+        CompleteBinaryTree duplicate = tree.question2();
 
+        assertEquals(checkTrees(tree.getRoot(),  duplicate.getRoot()), true, "Should return true");
+        tree.delete(60);
+        duplicate.delete(55);
+        assertEquals(checkTrees(tree.getRoot(),  duplicate.getRoot()), false, "Should return false");
+
+    }
     @Test
     void question2EmptyBoth() {
         CompleteBinaryTree tree = new CompleteBinaryTree();
@@ -236,13 +288,20 @@ class CompleteBinaryTreeTest {
     @Test
     void question2OneEmptyAfterDeletion() {
         CompleteBinaryTree tree = new CompleteBinaryTree();
-        tree.insert(60);
+        tree.insert(1);
+        tree.insert(2);
+        tree.insert(3);
+        tree.insert(4);
 
         CompleteBinaryTree duplicate = tree.question2();
+        
+
 
         assertEquals(checkTrees(tree.getRoot(), duplicate.getRoot()), true, "Should return true");
-
-        tree.delete(60);
+        tree.delete(1);
+        tree.delete(2);
+        tree.delete(3);
+        tree.delete(4);
 
         assertEquals(checkTrees(tree.getRoot(), duplicate.getRoot()), false, "Should return false");
     }
@@ -250,14 +309,17 @@ class CompleteBinaryTreeTest {
     @Test
     void question2BothEmptyafterDeletion() {
         CompleteBinaryTree tree = new CompleteBinaryTree();
-        tree.insert(60);
-        
+        tree.insert(1);
+   
+
         CompleteBinaryTree duplicate = tree.question2();
+        
+
 
         assertEquals(checkTrees(tree.getRoot(), duplicate.getRoot()), true, "Should return true");
 
-        tree.delete(60);
-        duplicate.delete(60);
+        tree.delete(1);
+        duplicate.delete(1);
         assertEquals(checkTrees(tree.getRoot(), duplicate.getRoot()), true, "Should return true");
     }
 
@@ -267,20 +329,18 @@ class CompleteBinaryTreeTest {
         CompleteBinaryTree duplicate = tree.question2();
 
         assertEquals(checkTrees(tree.getRoot(), duplicate.getRoot()), true, "Should return true");
-        tree.insert(60);
+        tree.insert(1);
         assertEquals(checkTrees(tree.getRoot(), duplicate.getRoot()), false, "Should return false");
     }
 
     @Test
-    void question2EmptyandInsertionBoth() {
+    void question2EmptyandDifferentInsertionBoth() {
         CompleteBinaryTree tree = new CompleteBinaryTree();
         CompleteBinaryTree duplicate = tree.question2();
-        Node root1 = tree.getRoot();
-        Node root2 = duplicate.getRoot();
 
-        assertEquals(checkTrees(root1, root2), true, "Should return true");
-        tree.insert(60);
-        duplicate.insert(60);
-        assertEquals(checkTrees(root1, root2), true, "Should return true");
+        assertEquals(checkTrees(tree.getRoot(), duplicate.getRoot()), true, "Should return true");
+        tree.insert(1);
+        duplicate.insert(5);
+        assertEquals(checkTrees(tree.getRoot(), duplicate.getRoot()), false, "Should return false");
     }
 }
